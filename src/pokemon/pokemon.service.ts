@@ -3,29 +3,31 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { CreatePokemonDto } from './dto/create-pokemon.dto';
 import { UpdatePokemonDto } from './dto/update-pokemon.dto';
 import { Pokemon } from './entities/pokemon.entity';
-import { pokemon } from './pokemon.json';
 
 @Injectable()
 export class PokemonService {
   constructor(private prisma: PrismaService) {}
 
   create(createPokemonDto: CreatePokemonDto) {
-    return 'This action adds a new pokemon';
+    return this.prisma.pokemon.create({ data: createPokemonDto });
   }
 
-  findAll(): Pokemon[] {
-    return pokemon;
+  findAll(): Promise<Pokemon[]> {
+    return this.prisma.pokemon.findMany();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} pokemon`;
+  findOne(id: number): Promise<Pokemon | null> {
+    return this.prisma.pokemon.findUnique({ where: { id } });
   }
 
   update(id: number, updatePokemonDto: UpdatePokemonDto) {
-    return `This action updates a #${id} pokemon`;
+    return this.prisma.pokemon.update({
+      where: { id },
+      data: updatePokemonDto,
+    });
   }
 
   remove(id: number) {
-    return `This action removes a #${id} pokemon`;
+    return this.prisma.pokemon.delete({ where: { id } });
   }
 }
