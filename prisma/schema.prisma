@@ -11,9 +11,25 @@ datasource db {
 }
 
 model Pokemon {
-  id          Int      @id @default(autoincrement())
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  name        String   @unique
-  url         String   @unique
+  id               Int            @id @default(autoincrement())
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+  species          PokemonSpecies @relation(fields: [id], references: [id])
+  level            Int            @default(1)
+}
+
+model PokemonSpecies {
+  id        Int           @id @default(autoincrement())
+  name      String        @unique
+  url       String        @unique
+  types     PokemonType[]
+  Pokemon   Pokemon[]
+}
+
+model PokemonType {
+  id               Int              @id @default(autoincrement())
+  name             String           @unique
+  weaknesses       PokemonType?     @relation("TypeWeakness", fields: [name], references: [name])
+  strengths        PokemonType?     @relation("TypeWeakness")
+  species          PokemonSpecies[]
 }
