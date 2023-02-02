@@ -6,12 +6,12 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "cockroachdb"
   url      = env("DATABASE_URL")
 }
 
 model Pokemon {
-  id               Int            @id @default(autoincrement())
+  id               BigInt         @id @default(autoincrement())
   createdAt        DateTime       @default(now())
   updatedAt        DateTime       @updatedAt
   species          PokemonSpecies @relation(fields: [id], references: [id])
@@ -19,7 +19,7 @@ model Pokemon {
 }
 
 model PokemonSpecies {
-  id        Int           @id @default(autoincrement())
+  id        BigInt        @id @default(autoincrement())
   name      String        @unique
   url       String        @unique
   types     PokemonType[]
@@ -27,7 +27,7 @@ model PokemonSpecies {
 }
 
 model PokemonType {
-  id               Int              @id @default(autoincrement())
+  id               BigInt           @id @default(autoincrement())
   name             String           @unique
   weaknesses       PokemonType?     @relation("TypeWeakness", fields: [name], references: [name])
   strengths        PokemonType?     @relation("TypeWeakness")

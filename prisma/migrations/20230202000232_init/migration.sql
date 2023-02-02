@@ -1,42 +1,34 @@
-/*
-  Warnings:
+-- CreateTable
+CREATE TABLE "Pokemon" (
+    "id" INT8 NOT NULL DEFAULT unique_rowid(),
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+    "level" INT4 NOT NULL DEFAULT 1,
 
-  - You are about to drop the column `name` on the `Pokemon` table. All the data in the column will be lost.
-  - You are about to drop the column `url` on the `Pokemon` table. All the data in the column will be lost.
-
-*/
--- DropIndex
-DROP INDEX "Pokemon_name_key";
-
--- DropIndex
-DROP INDEX "Pokemon_url_key";
-
--- AlterTable
-ALTER TABLE "Pokemon" DROP COLUMN "name",
-DROP COLUMN "url",
-ADD COLUMN     "level" INTEGER NOT NULL DEFAULT 1;
+    CONSTRAINT "Pokemon_pkey" PRIMARY KEY ("id")
+);
 
 -- CreateTable
 CREATE TABLE "PokemonSpecies" (
-    "id" SERIAL NOT NULL,
-    "name" TEXT NOT NULL,
-    "url" TEXT NOT NULL,
+    "id" INT8 NOT NULL DEFAULT unique_rowid(),
+    "name" STRING NOT NULL,
+    "url" STRING NOT NULL,
 
     CONSTRAINT "PokemonSpecies_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "PokemonType" (
-    "id" SERIAL NOT NULL,
-    "name" TEXT NOT NULL,
+    "id" INT8 NOT NULL DEFAULT unique_rowid(),
+    "name" STRING NOT NULL,
 
     CONSTRAINT "PokemonType_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "_PokemonSpeciesToPokemonType" (
-    "A" INTEGER NOT NULL,
-    "B" INTEGER NOT NULL
+    "A" INT8 NOT NULL,
+    "B" INT8 NOT NULL
 );
 
 -- CreateIndex
